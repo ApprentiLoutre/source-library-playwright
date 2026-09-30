@@ -12,6 +12,7 @@ import { Workflow } from './lib/session.mjs';
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(ROOT, 'public');
 const PORT = Number(process.env.PORT ?? 3000);
+const HOST = process.env.HOST ?? '0.0.0.0';
 
 const workflow = new Workflow();
 
@@ -109,8 +110,8 @@ const server = http.createServer(async (req, res) => {
   return serveStatic(res, pathname);
 });
 
-server.listen(PORT, () => {
-  console.log(`\n  Interface Source Library : http://localhost:${PORT}\n`);
+server.listen(PORT, HOST, () => {
+  console.log(`\n  Interface Source Library : http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}\n`);
 });
 
 const shutdown = async () => {

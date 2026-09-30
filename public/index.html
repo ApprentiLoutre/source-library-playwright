@@ -246,6 +246,10 @@ function render(s) {
     $('keyValue').textContent = s.apiKey;
     $('keybox').classList.remove('hidden');
     $('btnCopy').classList.remove('hidden');
+  } else {
+    $('keyValue').textContent = '';
+    $('keybox').classList.add('hidden');
+    $('btnCopy').classList.add('hidden');
   }
 
   // Journal
@@ -256,6 +260,8 @@ function render(s) {
       const cls = l.level === 'error' ? 'lvl-error' : l.level === 'warn' ? 'lvl-warn' : '';
       return `<div class="${cls}">[${t}] ${escapeHtml(l.text)}</div>`;
     }).join('');
+  } else {
+    $('logs').innerHTML = '<div>En attente…</div>';
   }
 
   // Activation des boutons selon l'étape
@@ -276,6 +282,18 @@ function setBusy(on) {
   state.busy = on;
   document.querySelectorAll('button').forEach(b => { if (on) b.disabled = true; });
   if (state.last) render(state.last);
+}
+
+function clearFormFields() {
+  $('email').value = '';
+  $('link').value = '';
+  $('keyValue').textContent = '';
+  $('keybox').classList.add('hidden');
+  $('btnCopy').classList.add('hidden');
+  if (state.last) {
+    state.last.email = null;
+    state.last.apiKey = null;
+  }
 }
 
 async function api(path, body) {
@@ -301,11 +319,21 @@ async function action(fn) {
 }
 
 // --- Événements ---
-$('btnReset').onclick   = () => action(() => api('/api/reset', {}));
+$('btnReset').onclick   = () => {
+  clearFormFields();
+  action(async () => {
+    const res = await api('/api/reset', {});
+    clearFormFields();
+    return res;
+  });
+};
 $('btnRestart').onclick = () => {
-  $('email').value = ''; $('link').value = '';
-  $('keybox').classList.add('hidden'); $('btnCopy').classList.add('hidden');
-  action(() => api('/api/reset', {}));
+  clearFormFields();
+  action(async () => {
+    const res = await api('/api/reset', {});
+    clearFormFields();
+    return res;
+  });
 };
 $('btnEmail').onclick   = () => action(() => api('/api/request-email', { email: $('email').value.trim() }));
 $('btnLink').onclick    = () => action(() => api('/api/confirm-link', { link: $('link').value.trim() }));

@@ -6,24 +6,23 @@
 <title>Source Library — Assistant de compte & clé API</title>
 <style>
   :root {
-    --bg: #0b1020;
-    --panel: #141a2e;
-    --panel-2: #1b2340;
-    --line: #2a3458;
-    --text: #e8ecf8;
-    --muted: #94a0c4;
-    --accent: #6ea8fe;
-    --accent-2: #8b5cf6;
-    --ok: #34d399;
-    --warn: #fbbf24;
-    --err: #f87171;
-    --radius: 14px;
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel-2: #f5f5f5;
+    --line: #e0e0e0;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --accent: #1a1a1a;
+    --ok: #16a34a;
+    --warn: #ca8a04;
+    --err: #dc2626;
+    --radius: 8px;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: radial-gradient(1200px 700px at 20% -10%, #1c2957 0%, var(--bg) 55%) fixed;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     line-height: 1.5;
@@ -33,12 +32,8 @@
     max-width: 860px;
     margin: 0 auto;
   }
-  h1 { font-size: 1.6rem; margin: 0 0 6px; letter-spacing: -.02em; }
-  h1 .grad {
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .sub { color: var(--muted); font-size: .95rem; margin: 0; }
+  h1 { font-size: 1.4rem; margin: 0 0 6px; letter-spacing: -.02em; font-weight: 700; }
+  .sub { color: var(--muted); font-size: .9rem; margin: 0; }
   main { max-width: 860px; margin: 0 auto; padding: 16px 24px 60px; }
   .card {
     background: var(--panel);
@@ -46,69 +41,67 @@
     border-radius: var(--radius);
     padding: 20px;
     margin: 16px 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,.25);
   }
   .card h2 { font-size: 1rem; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; }
   .step-num {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    font-size: .8rem; font-weight: 700; color: #0b1020; flex: none;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--text); color: var(--bg);
+    font-size: .78rem; font-weight: 700; flex: none;
   }
   .card p.hint { color: var(--muted); font-size: .85rem; margin: 0 0 14px; }
   label { display: block; font-size: .82rem; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
   input[type=email], input[type=url], input[type=text] {
-    width: 100%; padding: 12px 14px;
-    background: #0e1428; color: var(--text);
-    border: 1px solid var(--line); border-radius: 10px;
+    width: 100%; padding: 10px 12px;
+    background: #fff; color: var(--text);
+    border: 1px solid var(--line); border-radius: 6px;
     font-size: .95rem; font-family: inherit;
-    transition: border-color .15s, box-shadow .15s;
+    transition: border-color .15s;
   }
-  input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(110,168,254,.18); }
+  input:focus { outline: none; border-color: var(--text); }
   .row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
   button {
-    font-family: inherit; font-size: .9rem; font-weight: 600;
-    padding: 11px 18px; border-radius: 10px; cursor: pointer;
-    border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
-    transition: transform .05s, background .15s, opacity .15s;
+    font-family: inherit; font-size: .88rem; font-weight: 600;
+    padding: 10px 16px; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--line); background: #fff; color: var(--text);
+    transition: background .1s;
   }
-  button:hover:not(:disabled) { background: #232d52; }
-  button:active:not(:disabled) { transform: translateY(1px); }
+  button:hover:not(:disabled) { background: var(--panel-2); }
+  button:active:not(:disabled) { background: #eee; }
   button.primary {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    border: none; color: #0b1020;
+    background: var(--text); border-color: var(--text); color: #fff;
   }
-  button.primary:hover:not(:disabled) { filter: brightness(1.08); background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
-  button.danger { color: var(--err); border-color: #52263a; }
-  button.danger:hover:not(:disabled) { background: #2a1723; }
-  button:disabled { opacity: .45; cursor: not-allowed; }
+  button.primary:hover:not(:disabled) { background: #333; }
+  button.danger { color: var(--err); border-color: #fecaca; }
+  button.danger:hover:not(:disabled) { background: #fef2f2; }
+  button:disabled { opacity: .4; cursor: not-allowed; }
   .status {
     display: flex; align-items: flex-start; gap: 12px;
-    padding: 14px 16px; border-radius: 12px;
+    padding: 12px 14px; border-radius: 6px;
     background: var(--panel-2); border: 1px solid var(--line);
     font-size: .9rem;
   }
   .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 6px; flex: none; background: var(--muted); }
-  .dot.ok { background: var(--ok); box-shadow: 0 0 10px var(--ok); }
-  .dot.warn { background: var(--warn); box-shadow: 0 0 10px var(--warn); }
-  .dot.err { background: var(--err); box-shadow: 0 0 10px var(--err); }
-  .dot.busy { background: var(--accent); animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .dot.ok { background: var(--ok); }
+  .dot.warn { background: var(--warn); }
+  .dot.err { background: var(--err); }
+  .dot.busy { background: var(--text); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
   .badge {
     display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
     text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
-    background: #223052; color: var(--muted); border: 1px solid var(--line);
+    background: var(--panel-2); color: var(--muted); border: 1px solid var(--line);
   }
-  .badge.ok { background: rgba(52,211,153,.12); color: var(--ok); border-color: rgba(52,211,153,.35); }
-  .badge.warn { background: rgba(251,191,36,.12); color: var(--warn); border-color: rgba(251,191,36,.35); }
-  .badge.err { background: rgba(248,113,113,.12); color: var(--err); border-color: rgba(248,113,113,.35); }
+  .badge.ok { background: #f0fdf4; color: var(--ok); border-color: #bbf7d0; }
+  .badge.warn { background: #fefce8; color: var(--warn); border-color: #fef08a; }
+  .badge.err { background: #fef2f2; color: var(--err); border-color: #fecaca; }
   .keybox {
-    margin-top: 14px; padding: 16px;
-    background: #0a0f20; border: 1px solid rgba(52,211,153,.4);
-    border-radius: 12px;
+    margin-top: 14px; padding: 14px;
+    background: #f0fdf4; border: 1px solid #bbf7d0;
+    border-radius: 6px;
   }
   .keybox .key {
-    font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+    font-family: ui-monospace, Menlo, monospace;
     font-size: .95rem; word-break: break-all; color: var(--ok);
     user-select: all;
   }
@@ -116,27 +109,27 @@
   .hidden { display: none !important; }
   .logs {
     margin-top: 14px; max-height: 190px; overflow: auto;
-    background: #080c18; border: 1px solid var(--line); border-radius: 10px;
+    background: var(--panel-2); border: 1px solid var(--line); border-radius: 6px;
     padding: 10px 12px; font-family: ui-monospace, Menlo, monospace;
     font-size: .76rem; color: var(--muted);
   }
-  .logs div { padding: 2px 0; border-bottom: 1px solid rgba(255,255,255,.03); white-space: pre-wrap; }
+  .logs div { padding: 2px 0; border-bottom: 1px solid #eee; white-space: pre-wrap; }
   .logs .lvl-error { color: var(--err); }
   .logs .lvl-warn { color: var(--warn); }
   .spinner {
-    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.25);
-    border-top-color: #0b1020; border-radius: 50%;
+    width: 16px; height: 16px; border: 2px solid #ddd;
+    border-top-color: var(--text); border-radius: 50%;
     animation: spin .7s linear infinite; display: inline-block; vertical-align: -3px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 0 24px 40px; }
-  code { font-family: ui-monospace, Menlo, monospace; }
+  code { font-family: ui-monospace, Menlo, monospace; font-size: .88rem; background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
 </style>
 </head>
 <body>
 <header>
-  <h1>Source Library · <span class="grad">Compte &amp; clé API</span></h1>
-  <p class="sub">Parcours guidé : demande de lien par email → confirmation → génération de la clé API.</p>
+  <h1>Source Library · Compte &amp; clé API</h1>
+  <p class="sub">Parcours guidé : demande de lien par email → confirmation &amp; génération de la clé API.</p>
 </header>
 
 <main>
@@ -172,21 +165,12 @@
 
   <!-- Étape 2 -->
   <section class="card" id="cardLink">
-    <h2><span class="step-num">2</span> Confirmer le lien reçu par email</h2>
-    <p class="hint">Collez le lien de connexion reçu (il commence souvent par <code>ilove.sourcelibrary.org/CL0/…</code> ou <code>sourcelibrary.org/auth/confirm…</code>). Il ouvre automatiquement la session.</p>
+    <h2><span class="step-num">2</span> Confirmer le lien &amp; générer la clé API</h2>
+    <p class="hint">Collez le lien de connexion reçu (il commence souvent par <code>ilove.sourcelibrary.org/CL0/…</code> ou <code>sourcelibrary.org/auth/confirm…</code>). L'authentification est confirmée puis la clé API est générée automatiquement. Attention : chaque clic crée une nouvelle clé.</p>
     <label for="link">Lien de connexion (magic link)</label>
     <input id="link" type="url" placeholder="https://…" spellcheck="false">
     <div class="row">
-      <button id="btnLink" class="primary">🔓 Confirmer &amp; se connecter</button>
-    </div>
-  </section>
-
-  <!-- Étape 3 -->
-  <section class="card" id="cardKey">
-    <h2><span class="step-num">3</span> Générer la clé API</h2>
-    <p class="hint">Ouvre la page <code>/developers</code>, clique « Generate API Key », attend, puis affiche la clé. Attention : chaque clic crée une nouvelle clé.</p>
-    <div class="row">
-      <button id="btnKey" class="primary">🔑 Générer la clé API</button>
+      <button id="btnLink" class="primary">🔓 Confirmer &amp; générer la clé API</button>
       <button id="btnCopy" class="hidden">📋 Copier la clé</button>
     </div>
     <div id="keybox" class="keybox hidden">
@@ -270,7 +254,6 @@ function render(s) {
   $('btnRestart').disabled = locked;
   $('btnEmail').disabled = locked || !$('email').value.trim() || !s.browserOpen;
   $('btnLink').disabled = locked || !$('link').value.trim() || !s.browserOpen;
-  $('btnKey').disabled = locked || !(s.status === 'signed_in' || s.status === 'key_generated');
 }
 
 function escapeHtml(str) {
@@ -336,8 +319,14 @@ $('btnRestart').onclick = () => {
   });
 };
 $('btnEmail').onclick   = () => action(() => api('/api/request-email', { email: $('email').value.trim() }));
-$('btnLink').onclick    = () => action(() => api('/api/confirm-link', { link: $('link').value.trim() }));
-$('btnKey').onclick     = () => action(() => api('/api/generate-key', {}));
+$('btnLink').onclick    = () => action(async () => {
+  const confirmRes = await api('/api/confirm-link', { link: $('link').value.trim() });
+  render(confirmRes);
+  if (confirmRes.status === 'signed_in') {
+    return await api('/api/generate-key', {});
+  }
+  return confirmRes;
+});
 $('btnCopy').onclick    = async () => {
   if (!state.last?.apiKey) return;
   try { await navigator.clipboard.writeText(state.last.apiKey); $('btnCopy').textContent = '✅ Copié !'; }
